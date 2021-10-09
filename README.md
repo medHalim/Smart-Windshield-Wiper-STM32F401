@@ -12,7 +12,7 @@ In automatic mode, the high luminance infrared diode is used as the lamp source 
 
 The experiment has been made; results show that the system designed in this project is sensitive and reliable.
 
-Credits to github.com/4ilo and github.com/afiskon/ for the amazing ssd1306 library.
+Credits to github.com/4ilo and github.com/afiskon for the amazing ssd1306 library.
 
 ## Schematic
 ![Wiper_Schematic](https://user-images.githubusercontent.com/58752435/136293385-18aece0e-7040-41c5-9a71-eccf70b8e120.png)
