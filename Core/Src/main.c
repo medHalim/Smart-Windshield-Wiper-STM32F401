@@ -96,17 +96,17 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 
-	servo_stop();
+  servo_stop();
+
+  ssd1306_Init();
 	
-	ssd1306_Init();
-	
-	ssd1306_Fill(Black);
-	ssd1306_SetCursor(2, 2);
+  ssd1306_Fill(Black);
+  ssd1306_SetCursor(2, 2);
   ssd1306_WriteString("Wiper Project", Font_16x26, White);
   ssd1306_UpdateScreen();
-	HAL_Delay(3000);
+  HAL_Delay(3000);
 	
   /* USER CODE END 2 */
 
@@ -117,46 +117,50 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if(AUTO == 1)
+    /* Automatic mode */
+	if(AUTO == 1) // Interrupt by button
+	{
+		HAL_Delay(50);
+		if(HAL_GPIO_ReadPin(GPIOB, ir_Sensor_Pin) == 1) 
 		{
-			HAL_Delay(50);
-			if(HAL_GPIO_ReadPin(GPIOB, ir_Sensor_Pin) == 1)
-			{
-				servo_stop();
-				ssd1306_SetCursor(1, 2);
-        ssd1306_WriteString("Wiper: OFF", Font_16x26, White);
-				ssd1306_SetCursor(2, 2);
-				ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
-        ssd1306_UpdateScreen();
-			}
-			else
-			{
-				ssd1306_SetCursor(1, 2);
-        ssd1306_WriteString("Wiper: ON", Font_16x26, White);
-				ssd1306_SetCursor(2, 2);
-				ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
-        ssd1306_UpdateScreen();
-				servo_wipe();
-			}
-		}
-		else
-		{
-			HAL_Delay(50);
+            /* Idle */
+			servo_stop();
 			ssd1306_SetCursor(1, 2);
-      ssd1306_WriteString("Wiper: OFF", Font_16x26, White);
-		  ssd1306_SetCursor(2, 2);
-			ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
-      ssd1306_UpdateScreen();
-			if(HAL_GPIO_ReadPin(GPIOA, mode_Button_Pin) == 1)
-			{
-			  ssd1306_SetCursor(1, 2);
-        ssd1306_WriteString("Wiper: ON", Font_16x26, White);
-		    ssd1306_SetCursor(2, 2);
-			  ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
-        ssd1306_UpdateScreen();
-				servo_wipe();
-			}
+            ssd1306_WriteString("Wiper: OFF", Font_16x26, White);
+			ssd1306_SetCursor(2, 2);
+			ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
+            ssd1306_UpdateScreen();
 		}
+		else // IR Sensor detects raindrops 
+		{
+			ssd1306_SetCursor(1, 2);
+            ssd1306_WriteString("Wiper: ON", Font_16x26, White);
+			ssd1306_SetCursor(2, 2);
+			ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
+            ssd1306_UpdateScreen();
+			servo_wipe();
+		}
+	}
+    /* Manual mode */
+	else
+	{
+        /* Idle */
+		HAL_Delay(50);
+		ssd1306_SetCursor(1, 2);
+        ssd1306_WriteString("Wiper: OFF", Font_16x26, White);
+		ssd1306_SetCursor(2, 2);
+		ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
+        ssd1306_UpdateScreen();
+		if(HAL_GPIO_ReadPin(GPIOA, mode_Button_Pin) == 1) // if Push button is pressed 
+		{
+			ssd1306_SetCursor(1, 2);
+            ssd1306_WriteString("Wiper: ON", Font_16x26, White);
+		    ssd1306_SetCursor(2, 2);
+			ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
+            ssd1306_UpdateScreen();
+	    	servo_wipe();
+		}
+	}
   }
   /* USER CODE END 3 */
 }
