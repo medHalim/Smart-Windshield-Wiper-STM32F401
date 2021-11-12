@@ -48,7 +48,7 @@ I2C_HandleTypeDef hi2c1;
 TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN PV */
-uint8_t AUTO = 0;
+uint8_t AUTO = 0; // Variable switches between 2 values (0,1) by interrupt   
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
