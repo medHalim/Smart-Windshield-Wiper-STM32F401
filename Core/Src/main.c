@@ -118,49 +118,49 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     /* Automatic mode */
-	if(AUTO == 1) // Interrupt by button
-	{
-		HAL_Delay(50);
-		if(HAL_GPIO_ReadPin(GPIOB, ir_Sensor_Pin) == 1) 
-		{
-            /* Idle */
-			servo_stop();
-			ssd1306_SetCursor(1, 2);
-            ssd1306_WriteString("Wiper: OFF", Font_16x26, White);
-			ssd1306_SetCursor(2, 2);
-			ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
-            ssd1306_UpdateScreen();
-		}
-		else // IR Sensor detects raindrops 
-		{
-			ssd1306_SetCursor(1, 2);
-            ssd1306_WriteString("Wiper: ON", Font_16x26, White);
-			ssd1306_SetCursor(2, 2);
-			ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
-            ssd1306_UpdateScreen();
-			servo_wipe();
-		}
-	}
-    /* Manual mode */
-	else
-	{
+	  if(AUTO == 1) // Interrupt by button
+	  {
+		  HAL_Delay(50);
+		  if(HAL_GPIO_ReadPin(GPIOB, ir_Sensor_Pin) == 1) 
+		  {
         /* Idle */
-		HAL_Delay(50);
-		ssd1306_SetCursor(1, 2);
+			  servo_stop();
+			  ssd1306_SetCursor(1, 2);
         ssd1306_WriteString("Wiper: OFF", Font_16x26, White);
-		ssd1306_SetCursor(2, 2);
-		ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
+			  ssd1306_SetCursor(2, 2);
+			  ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
         ssd1306_UpdateScreen();
-		if(HAL_GPIO_ReadPin(GPIOA, mode_Button_Pin) == 1) // if Push button is pressed 
-		{
-			ssd1306_SetCursor(1, 2);
-            ssd1306_WriteString("Wiper: ON", Font_16x26, White);
+		  } 
+		  else // IR Sensor detects raindrops 
+		  {
+			  ssd1306_SetCursor(1, 2);
+        ssd1306_WriteString("Wiper: ON", Font_16x26, White);
+			  ssd1306_SetCursor(2, 2);
+			  ssd1306_WriteString("Mode: AUTO", Font_16x26, White);
+        ssd1306_UpdateScreen();
+		  	servo_wipe();
+		  }
+	  }
+    /* Manual mode */
+    else
+	  {
+      /* Idle */
+		  HAL_Delay(50);
+		  ssd1306_SetCursor(1, 2)
+      ssd1306_WriteString("Wiper: OFF", Font_16x26, White);
+		  ssd1306_SetCursor(2, 2);
+		  ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
+      ssd1306_UpdateScreen();
+		  if(HAL_GPIO_ReadPin(GPIOA, mode_Button_Pin) == 1) // if Push button is pressed 
+		  {
+			  ssd1306_SetCursor(1, 2);
+        ssd1306_WriteString("Wiper: ON", Font_16x26, White);
 		    ssd1306_SetCursor(2, 2);
-			ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
-            ssd1306_UpdateScreen();
-	    	servo_wipe();
-		}
-	}
+			  ssd1306_WriteString("Mode: MANUAL", Font_16x26, White);
+        ssd1306_UpdateScreen();
+	      servo_wipe();
+		  }
+	  }
   }
   /* USER CODE END 3 */
 }
