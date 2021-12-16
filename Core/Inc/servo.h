@@ -6,7 +6,10 @@
  */ 
 
 // Includes
+#include "main.h"
 #include "globalVar.h"
+
+extern TIM_HandleTypeDef htim1;
 
 // Function prototypes
 int map(int st1, int fn1, int st2, int fn2, int value);
